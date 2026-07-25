@@ -1,4 +1,6 @@
-## Copyright ©️ 2026 SillyOdyssey
+## MIT License
+
+Copyright ©️ 2026 SillyOdyssey
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
