@@ -36,6 +36,8 @@ Once you are inside the active interactive terminal or execution prompt, you can
 * **Wipe Environment Memory:** Type `::restart` to cleanly flush active variable registries and wipe the console pixels.
 * **Custom Sandboxed Modules:** Leverage the `PY:` token prefix to safely trigger isolated host utilities like `PY:clear`, `PY:break`, or `PY:input`.
 
+* A fact: SSY also works on other Python IDE services, not just Pydroid 3.
+
 ---
 
 ## 📄 License and Distribution
