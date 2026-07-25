@@ -40,6 +40,6 @@ Once you are inside the active interactive terminal or execution prompt, you can
 
 ## 📄 License and Distribution
 
-Developed by **SillyOdyssey**.
+Developed by **[SillyOdyssey](https://github.com/SillyOdyssey)**.
 
 This project is open-source software licensed under the [MIT License](LICENSE.md).
