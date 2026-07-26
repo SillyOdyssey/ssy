@@ -35,8 +35,8 @@ Once you are inside the active interactive terminal or execution prompt, you can
 * **Interactive Engine Manual:** Type `::guide` to print a complete operational syntax reference sheet on screen.
 * **Wipe Environment Memory:** Type `::restart` to cleanly flush active variable registries and wipe the console pixels.
 * **Custom Sandboxed Modules:** Leverage the `PY:` token prefix to safely trigger isolated host utilities like `PY:clear`, `PY:break`, or `PY:input`.
-
-* A fact: SSY also works on other Python IDE services, not just Pydroid 3.
+* **A fact:** SSY also works on other Python IDE services, not just Pydroid 3.
+* **Version Pull-up:** Use `::version` to pull-up the working SSY version you use right now. Useful for detecting old versions.
 
 ---
 
