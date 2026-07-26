@@ -32,6 +32,8 @@ class GuideNode:
 
 class RestartNode:
     pass 
+class VersionNode:
+    pass
 
 class Interpreter:
     def __init__(self):
@@ -88,10 +90,13 @@ class Interpreter:
 6. UTILITIES
    • ::guide            -> Shows this reference sheet.
    • ::restart          -> Wipes variable memory and clears the screen.
+   • ::version          -> Shows the current running version of SSY.
    • exit               -> Closes the active interactive shell.
 ========================================
 """
         print(guide_text)
+    def pull_version(self):
+        version = "1.1"
 
     def lex_and_parse(self, code):
         code = re.sub(r'<com#[^>]*>', '', code)
@@ -105,6 +110,8 @@ class Interpreter:
             return GuideNode()
         if code == "::restart":
             return RestartNode()
+        if code == "::version":
+            return VersionNode()
 
         # 2. Native Python Bridge Syntax: PY:
         if code.startswith("PY:"):
@@ -171,6 +178,9 @@ class Interpreter:
             self.variables.clear() 
             self.clear_terminal_screen() # Safe ANSI clear call
             print("Welcome to SSY!") 
+
+        elif insistance(ast_node, VersionNode):
+            self.pull_version
 
         elif isinstance(ast_node, NativePythonNode):
             if ast_node.target_command == "print":
