@@ -97,6 +97,7 @@ class Interpreter:
         print(guide_text)
     def pull_version(self):
         version = "1.1"
+        print("SSY Version ",version)
 
     def lex_and_parse(self, code):
         code = re.sub(r'<com#[^>]*>', '', code)
@@ -179,8 +180,8 @@ class Interpreter:
             self.clear_terminal_screen() # Safe ANSI clear call
             print("Welcome to SSY!") 
 
-        elif insistance(ast_node, VersionNode):
-            self.pull_version
+        elif isinstance(ast_node, VersionNode):
+            self.pull_version()
 
         elif isinstance(ast_node, NativePythonNode):
             if ast_node.target_command == "print":
