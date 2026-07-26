@@ -19,4 +19,4 @@ classifiers = [
 ]
 
 [project.scripts]
-ssy = "ssy.ssycore:main"
+ssy = "SSY.ssycore:main"
