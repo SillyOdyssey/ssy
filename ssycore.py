@@ -1,6 +1,5 @@
 import sys
 import re
-import os
 
 class InlineCalcNode:
     def __init__(self, raw_label, math_expression):
@@ -29,12 +28,19 @@ class NativePythonNode:
         self.target_var = target_var          
 
 class GuideNode:
-    pass # Simple node to trigger the documentation dump
+    pass 
+
+class RestartNode:
+    pass 
 
 class Interpreter:
     def __init__(self):
         self.variables = {}
         self.should_exit = False
+
+    def clear_terminal_screen(self):
+        """Safely clears the Pydroid 3 screen using universal ANSI escape codes instead of os.system."""
+        print("\033[H\033[J", end="")
 
     def prepare_expression(self, expr):
         var_patterns = re.findall(r'-[a-zA-Z0-9_]+', expr)
@@ -52,7 +58,6 @@ class Interpreter:
         return expr
 
     def print_guide(self):
-        """Prints the complete SSY documentation manual."""
         guide_text = """
 ========================================
              SSY COMMAND GUIDE          
@@ -82,22 +87,24 @@ class Interpreter:
 
 6. UTILITIES
    • ::guide            -> Shows this reference sheet.
+   • ::restart          -> Wipes variable memory and clears the screen.
    • exit               -> Closes the active interactive shell.
 ========================================
 """
         print(guide_text)
 
     def lex_and_parse(self, code):
-        # Remove comments wrapped in <com# ... >
         code = re.sub(r'<com#[^>]*>', '', code)
         code = code.strip()
         
         if not code:
             return None
 
-        # 1. SSY System Guide Command
+        # 1. SSY System Utilities
         if code == "::guide":
             return GuideNode()
+        if code == "::restart":
+            return RestartNode()
 
         # 2. Native Python Bridge Syntax: PY:
         if code.startswith("PY:"):
@@ -158,15 +165,18 @@ class Interpreter:
         if ast_node is None:
             return
             
-        # Handle Guide Trigger
         if isinstance(ast_node, GuideNode):
             self.print_guide()
+        elif isinstance(ast_node, RestartNode):
+            self.variables.clear() 
+            self.clear_terminal_screen() # Safe ANSI clear call
+            print("Welcome to SSY!") 
 
         elif isinstance(ast_node, NativePythonNode):
             if ast_node.target_command == "print":
                 print(ast_node.argument)
             elif ast_node.target_command == "clear":
-                os.system('clear' if os.name == 'posix' else 'cls')
+                self.clear_terminal_screen() # Safe ANSI clear call
             elif ast_node.target_command == "break":
                 self.should_exit = True
             elif ast_node.target_command == "input":
@@ -236,7 +246,7 @@ def main():
                     break
                 
                 ast = interpreter.lex_and_parse(user_input)
-                if ast is None and not user_input.strip().startswith("<com#") and user_input.strip() != "::guide":
+                if ast is None and not user_input.strip().startswith("<com#") and user_input.strip() not in ["::guide", "::restart"]:
                     print("SSY Syntax Error: Code skipped! Please input an expression.")
                     continue
                 
@@ -248,3 +258,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+        
